@@ -1,0 +1,14 @@
+*.log
+*.pyc
+.cache/
+.coverage
+.idea/
+.vscode/
+tsu.egg-info/
+build/
+dist/
+docs/build/
+venv/
+venv*/
+wheelhouse/
+pip-wheel-metadata/

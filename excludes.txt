@@ -1,0 +1,12 @@
+.git/
+tsu.egg-info/
+build/
+dist/
+docs/build/
+venv/
+wheelhouse/
+*.log
+*.pyc
+pip-wheel-metadata/
+tsu/tsu/__pycache__/
+data/blobs/
