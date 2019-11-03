@@ -15,11 +15,8 @@ import consolejs
 
 import tsu
 from tsu import consts
-from tsu.defs import magisk, losu, chsu
-
-from tsu.exec import SuExec
+from tsu.su_apps import SuCall, SuExit, SuNotFound
 from tsu.env_map import EnvMap
-
 
 ## Optimization strips docstring in build
 USAGE = """
@@ -43,28 +40,29 @@ USAGE = """
 
 """
 
+
 def cli():
 
     args = docopt(USAGE)
     cur_uid = os.getuid()
 
     ### Debug handler
-    debug_enabled = args["--debug"] 
+    debug_enabled = args["--debug"]
 
     # consolejs is a dynamic console logger for Python
     if debug_enabled:
-       cjs = consolejs.create(tsu)
-        
-       cjs.level = consolejs.DEBUG
+        cjs = consolejs.create(tsu)
+
+        cjs.level = consolejs.DEBUG
     else:
-       cjs= consolejs.disabled() 
-    
+        cjs = consolejs.disabled()
+
     console = cjs.console
     console.dir(args)
-    
+
     ### End Debug handler
 
-    ### Setup Shell and Enviroment
+    ### Setup Base Shell and Enviroment
     env_new = EnvMap(
         prepend=(args.get("-p")), clean=(args.get("-e")), usern=(args.get("USER"))
     )
@@ -74,28 +72,15 @@ def cli():
     env = env_new.get_env()
     shell = env_new.get_shell()
 
-
     # Check `su` binaries:
-    su_paths = [magisk, losu, chsu]
-    for su_path in su_paths:
-        su_bin = SuExec(su_path)
-
-        result = su_bin.vercmp()
-
-        if result == SuExec.FOUND:
-            su_bin.call_su( args.get("USER"), shell, env)
-            break
-        elif result == SuExec.UNSUPP:
-            print("Unsupported `su` found. ")
-            print("Pleae open an issue to add support")
-            break
-        elif result == SuExec.ABANDONED:
-            print(consts.CHSU_WARN)
-            break 
-    
-    # At this point. there is no `su` binary
-    print("No `su` binary not found.")
-    print("Are you rooted? ")
+    try:
+        SuCall(args.get("USER"), shell, env)
+    except SuExit as e:
+        SystemExit(e.message)
+    except SuNotFound:
+        # At this point. there is no `su` binary
+        print("No `su` binary not found.")
+        print("Are you rooted? ")
 
 
 ## Handler for direct call

@@ -5,7 +5,6 @@
 from pathlib import Path
 from collections import OrderedDict
 
-
 # Defaults in Termux and Android
 TERMUX_FS = "/data/data/com.termux/files/"
 TERMUX_PREFIX = f"{TERMUX_FS}/usr"
@@ -17,6 +16,6 @@ ANDROIDSYSTEM_PATHS = "/system/bin:/system/xbin"
 ## Location of su binaries.
 ROOT_UID = 0
 
-
 ### Help texts
-CHSU_WARN = "SuperSU is abandonware. Consider upgrading your SuperUser Application."
+MSG_CHSUWARN = "SuperSU is abandonware. Consider upgrading your SuperUser Application."
+MSG_UNSUPPSU = "Unsupported su found. n Pleae open an issue to add support"

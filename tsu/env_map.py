@@ -9,7 +9,7 @@ from . import user_utils
 from . import consts
 
 
-#@autowire(UserUtils)
+# @autowire(UserUtils)
 class EnvMap:
     _ENV_CLEAN_BASE = {"ANDROID_DATA": "/data", "ANDROID_ROOT": "/system"}
 
@@ -47,9 +47,8 @@ class EnvMap:
             return self.clean_root
         pass
 
-
     def get_shell(self):
-        console = consolejs.get_console(tsu) 
+        console = consolejs.get_console(tsu)
 
         root_shell = consts.SYS_SHELL
         USER_SHELL = Path(Path.home(), ".termux/shell")
@@ -112,5 +111,3 @@ class EnvMap:
         }
         environ = {**environ, **env_root}
         return environ
-
-

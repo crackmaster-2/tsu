@@ -2,12 +2,12 @@ from functools import lru_cache
 from pwd import getpwnam
 from pathlib import PurePath, Path
 
-
 import consolejs
 import tsu
 
+
 @lru_cache(maxsize=4)
-def is_other_user( user_n, uid):
+def is_other_user(user_n, uid):
     console = consolejs.get_console(tsu)
 
     if user_n == 0 or user_n == "root" or (not user_n):

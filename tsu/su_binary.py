@@ -1,5 +1,4 @@
-from pathlib import Path
-
+from pathlib import Path, PosixPath
 
 import attr
 import typing
@@ -14,9 +13,11 @@ class SuBinary:
     veropt: list
     argmap: dict
     multipath: typing.List[str] = None
-    abandoned : bool = None
-    
+    abandoned: bool = None
 
-    def lpath(self):
+    def cpath(self):
+        """
+    Returns a string of path to a concrete path
+        """
         if not self.multipath:
-            return Path(self.path)
+            return PosixPath(self.path)
