@@ -7,9 +7,11 @@ import tsu
 
 
 @lru_cache(maxsize=4)
-def is_other_user(user_n, uid):
+def is_other_user(uid, user_n):
     console = consolejs.get_console(tsu)
-
+    
+    # If username is root or 0 or not defined
+    # Assume it's root
     if user_n == 0 or user_n == "root" or (not user_n):
         return False
     target_uid = getpwnam(user_n).pw_uid

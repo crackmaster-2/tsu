@@ -15,7 +15,7 @@ readme_file="README.md"
 with open(readme_file) as f:
     readme = f.read()
 
-REQUIRES = ['docopt', 'wrapt', 'attrs', 'consolejs']
+REQUIRES = ['docopt', 'wrapt', 'attrs', 'consolejs', 'ruamel.yaml' ]
 
 setup(
     name='tsu',

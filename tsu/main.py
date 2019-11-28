@@ -9,14 +9,12 @@ import os
 import pwd
 from pathlib import Path, PurePath
 
-from docopt import docopt
-
 import consolejs
+from docopt import docopt
 
 import tsu
 from tsu import consts
 from tsu.su_apps import SuCall, SuExit, SuNotFound
-from tsu.env_map import EnvMap
 
 ## Optimization strips docstring in build
 USAGE = """
@@ -62,19 +60,11 @@ def cli():
 
     ### End Debug handler
 
-    ### Setup Base Shell and Enviroment
-    env_new = EnvMap(
-        prepend=(args.get("-p")), clean=(args.get("-e")), usern=(args.get("USER"))
-    )
-    env_new.c_uid = cur_uid
-    env_new.shell = args.get("-s")
-
-    env = env_new.get_env()
-    shell = env_new.get_shell()
+    env_build = {"prepend": args.get("-p"), "clean": args.get("-e")}
 
     # Check `su` binaries:
     try:
-        SuCall(args.get("USER"), shell, env)
+        SuCall(cur_uid, args.get("USER"), args.get("SHELL"), env_build)
     except SuExit as e:
         SystemExit(e.message)
     except SuNotFound:
