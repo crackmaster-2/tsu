@@ -171,7 +171,7 @@ class SuExec:
         if result == SuExec.FOUND:
             return (su_exec, None)
         elif result == SuExec.UNSUPPORTED:
-            return (None, consts.UNSUPPORTED)
+            return (None, consts.MSG_UNSUPPSU)
         elif result == SuExec.ABANDONED:
             return (None, consts.MSG_CHSUWARN)
         else:
